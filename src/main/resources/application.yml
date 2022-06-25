@@ -1,0 +1,43 @@
+spring:
+  datasource:
+    hikari:
+      jdbc-url: jdbc:h2:file:./h2db/sample
+      driver-class-name: org.h2.Driver
+      username: sa
+      maximum-pool-size: 5
+      minimum-idle: 1
+      pool-name: hikari
+  h2:
+    console:
+      path: /h2console
+      enabled: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+        default_batch_fetch_size: 500
+        dialect: org.hibernate.dialect.MySQL8Dialect
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            clientId: 0189e85fa9611608359e82e21d9459f2
+            client-name: kakao
+            redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
+            scope: account_email, profile_nickname
+            authorization-grant-type: authorization_code
+            client-authentication-method: POST
+        provider:
+          kakao:
+            authorization_uri: https://kauth.kakao.com/oauth/authorize
+            token_uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user_name_attribute: id
